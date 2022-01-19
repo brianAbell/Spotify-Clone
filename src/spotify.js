@@ -16,6 +16,18 @@ const scopes = [
   "user-modify-playback-state",
 ];
 
+// Obtains the access token after login to authenticate the user
+export const getTokenFromUrl = () => {
+    return window.location.hash
+      .substring(1)
+      .split("&")
+      .reduce((initial, item) => {
+        let parts = item.split("=");
+        initial[parts[0]] = decodeURIComponent(parts[1]);
+        return initial;
+      }, {});
+  };
+
 // Called to authorize a user. Contains Client ID and all permissions so Spotify knows
 export const loginUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
   "%20"
